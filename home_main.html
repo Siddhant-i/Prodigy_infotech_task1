@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>House Price Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home_style.css') }}" />
+</head>
+<body>
+ 
+  <div class="page">
+ 
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-icon">🏠</div>
+          <div>
+            <h1>House Price Predictor</h1>
+            <p>Get an instant estimate for any house</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="form-card">
+        <h2>Enter House Details</h2>
+ 
+        <div class="field">
+          <label for="sqft">Total Area <span class="unit">(sq ft)</span></label>
+          <input type="number" id="sqft" placeholder="e.g. 1200" min="100" max="15000" />
+        </div>
+ 
+        <div class="field">
+          <label for="bedrooms">Bedrooms</label>
+          <div class="counter-row">
+            <button class="counter-btn" onclick="change('bedrooms', -1)">−</button>
+            <input type="number" id="bedrooms" value="2" min="0" max="10" readonly />
+            <button class="counter-btn" onclick="change('bedrooms', 1)">+</button>
+          </div>
+        </div>
+ 
+        <div class="field">
+          <label for="full_bath">Full Bathrooms</label>
+          <div class="counter-row">
+            <button class="counter-btn" onclick="change('full_bath', -1)">−</button>
+            <input type="number" id="full_bath" value="1" min="0" max="8" readonly />
+            <button class="counter-btn" onclick="change('full_bath', 1)">+</button>
+          </div>
+        </div>
+ 
+        <div class="field">
+          <label for="half_bath">
+            Half Bathrooms
+            <span class="tooltip-wrap">
+              <span class="info-icon">?</span>
+              <span class="tooltip-text">A half bath has only a toilet and sink — no shower or tub.</span>
+            </span>
+          </label>
+          <div class="counter-row">
+            <button class="counter-btn" onclick="change('half_bath', -1)">−</button>
+            <input type="number" id="half_bath" value="0" min="0" max="4" readonly />
+            <button class="counter-btn" onclick="change('half_bath', 1)">+</button>
+          </div>
+        </div>
+ 
+        <button class="predict-btn" id="predict-btn" onclick="predict()">
+          Get Price Estimate
+        </button>
+ 
+        <p class="error-msg" id="error-msg"></p>
+      </section>
+ 
+      <section class="result-card" id="result-card">
+        <div class="result-placeholder" id="result-placeholder">
+          <span class="placeholder-icon">🏡</span>
+          <p>Fill in the details and click<br/><strong>Get Price Estimate</strong></p>
+        </div>
+ 
+        <div class="result-content" id="result-content">
+          <p class="result-label">Estimated Price</p>
+          <h2 class="result-price" id="result-price">—</h2>
+          <p class="result-range" id="result-range"></p>
+ 
+          <div class="divider"></div>
+ 
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-icon">📐</span>
+              <span class="summary-val" id="s-sqft">—</span>
+              <span class="summary-lbl">sq ft</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-icon">🛏</span>
+              <span class="summary-val" id="s-beds">—</span>
+              <span class="summary-lbl">Bedrooms</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-icon">🚿</span>
+              <span class="summary-val" id="s-baths">—</span>
+              <span class="summary-lbl">Bathrooms</span>
+            </div>
+          </div>
+ 
+          <button class="reset-btn" onclick="resetForm()">Try Another House</button>
+        </div>
+      </section>
+ 
+    </main>
+ 
+  </div>
+ 
+  <script src="{{ url_for('static', filename='home_function.js') }}"></script>
+ 
+</body>
+</html>
+ 
