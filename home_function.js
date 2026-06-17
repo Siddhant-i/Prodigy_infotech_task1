@@ -1,9 +1,8 @@
-
-function change(fieldId, delta) {
+function change(fieldId,delta){
   const input = document.getElementById(fieldId);
-  const min   = parseInt(input.min) || 0;
-  const max   = parseInt(input.max) || 99;
-  const val   = parseInt(input.value) || 0;
+  const min = parseInt(input.min)||0;
+  const max= parseInt(input.max)|| 99;
+  const val = parseInt(input.value) ||0;
   input.value = Math.min(max, Math.max(min, val + delta));
 }
 //  rupess functionality format
@@ -22,40 +21,39 @@ function clearError() {
 }
 async function predict() {
   clearError(); 
-  const sqft      = document.getElementById("sqft").value.trim();
-  const bedrooms  = document.getElementById("bedrooms").value;
-  const full_bath = document.getElementById("full_bath").value;
-  const half_bath = document.getElementById("half_bath").value;
+  const sqft = document.getElementById("sqft").value.trim();
+  const bedrooms = document.getElementById("bedrooms").value;
+  const full_bath =document.getElementById("full_bath").value;
+  const half_bath= document.getElementById("half_bath").value;
 
   if (!sqft || sqft <= 0) {
     showError("Please enter a valid total area.");
     return;
-  }
- 
+  } 
   const btn = document.getElementById("predict-btn");
-  btn.disabled    = true;
-  btn.innerHTML   = '<span class="spinner"></span>Calculating…';
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span>Calculating…';
   try {
     const formData = new FormData();
-    formData.append("sqft", sqft);
-    formData.append("bedrooms",bedrooms);
-    formData.append("full_bath",full_bath);
-    formData.append("half_bath",half_bath);
-    const response = await fetch("/predict", { method: "POST", body: formData });
+        formData.append("sqft", sqft);
+        formData.append("bedrooms",bedrooms);
+        formData.append("full_bath",full_bath);
+        formData.append("half_bath",half_bath);
+    const response = await fetch("/predict",{method:"POST",body:formData});
     const data = await response.json();
  
     if (data.error) {
       showError(data.error);
       return;
     }
-    document.getElementById("result-price").textContent = formatINR(data.price);
+    document.getElementById("result-price").textContent =formatINR(data.price);
     document.getElementById("result-range").textContent =
       `Range: ${formatINR(data.range_low)} – ${formatINR(data.range_high)}`;
     const totalBath = parseFloat(full_bath) + parseFloat(half_bath) * 0.5;
-    document.getElementById("s-sqft").textContent  = parseInt(sqft).toLocaleString("en-IN");
-    document.getElementById("s-beds").textContent  = bedrooms;
+    document.getElementById("s-sqft").textContent = parseInt(sqft).toLocaleString("en-IN");
+    document.getElementById("s-beds").textContent = bedrooms;
     document.getElementById("s-baths").textContent = totalBath;
- 
+
     document.getElementById("result-placeholder").style.display = "none";
     const content = document.getElementById("result-content");
     content.style.display = "block";
@@ -63,15 +61,15 @@ async function predict() {
  
   } catch (err) {
     showError("Cannot reach server. Make sure Flask is running.");
-  } finally {
+  } finally{
     btn.disabled  = false;
     btn.innerHTML = "Get Price Estimate";
   }
 }
 
-function resetForm() {
-  document.getElementById("sqft").value      = "";
-  document.getElementById("bedrooms").value  = "2";
+function resetForm(){
+  document.getElementById("sqft").value= "";
+  document.getElementById("bedrooms").value = "2";
   document.getElementById("full_bath").value = "1";
   document.getElementById("half_bath").value = "0";
   clearError();
