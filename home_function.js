@@ -12,7 +12,7 @@ function formatINR(amount) {
 }
 function showError(msg) {
   const el = document.getElementById("error-msg");
-  el.textContent = "⚠ " + msg;
+  el.textContent = " " + msg;
   el.style.display = "block";
 }
 function clearError() {
@@ -21,8 +21,7 @@ function clearError() {
   el.textContent   = "";
 }
 async function predict() {
-  clearError();
- 
+  clearError(); 
   const sqft      = document.getElementById("sqft").value.trim();
   const bedrooms  = document.getElementById("bedrooms").value;
   const full_bath = document.getElementById("full_bath").value;
@@ -36,14 +35,12 @@ async function predict() {
   const btn = document.getElementById("predict-btn");
   btn.disabled    = true;
   btn.innerHTML   = '<span class="spinner"></span>Calculating…';
- 
   try {
     const formData = new FormData();
-    formData.append("sqft",      sqft);
-    formData.append("bedrooms",  bedrooms);
-    formData.append("full_bath", full_bath);
-    formData.append("half_bath", half_bath);
- 
+    formData.append("sqft", sqft);
+    formData.append("bedrooms",bedrooms);
+    formData.append("full_bath",full_bath);
+    formData.append("half_bath",half_bath);
     const response = await fetch("/predict", { method: "POST", body: formData });
     const data = await res.json();
  
@@ -51,11 +48,9 @@ async function predict() {
       showError(data.error);
       return;
     }
-
     document.getElementById("result-price").textContent = formatINR(data.price);
     document.getElementById("result-range").textContent =
       `Range: ${formatINR(data.range_low)} – ${formatINR(data.range_high)}`;
- 
     const totalBath = parseFloat(full_bath) + parseFloat(half_bath) * 0.5;
     document.getElementById("s-sqft").textContent  = parseInt(sqft).toLocaleString("en-IN");
     document.getElementById("s-beds").textContent  = bedrooms;
@@ -80,7 +75,6 @@ function resetForm() {
   document.getElementById("full_bath").value = "1";
   document.getElementById("half_bath").value = "0";
   clearError();
- 
   document.getElementById("result-placeholder").style.display = "block";
   const content = document.getElementById("result-content");
   content.style.display = "none";
