@@ -57,7 +57,7 @@ async function predict() {
     document.getElementById("s-baths").textContent = totalBath;
  
     document.getElementById("result-placeholder").style.display = "none";
-    const resultcontent = document.getElementById("result-content");
+    const content = document.getElementById("result-content");
     content.style.display = "block";
     content.classList.add("fade-in");
  
