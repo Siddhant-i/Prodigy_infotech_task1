@@ -42,7 +42,7 @@ async function predict() {
     formData.append("full_bath",full_bath);
     formData.append("half_bath",half_bath);
     const response = await fetch("/predict", { method: "POST", body: formData });
-    const data = await res.json();
+    const data = await response.json();
  
     if (data.error) {
       showError(data.error);
@@ -77,7 +77,7 @@ function resetForm() {
   clearError();
   document.getElementById("result-placeholder").style.display = "block";
   const content = document.getElementById("result-content");
-  content.style.display = "none";
+  content.style.display = "block";
   content.classList.remove("fade-in");
 }
 //  enter key entry 
