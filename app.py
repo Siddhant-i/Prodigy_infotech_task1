@@ -60,21 +60,13 @@ def predict():
             "range_low"  : round(range_low_inr),
             "range_high" : round(range_high_inr),
         })
- 
     except KeyError as e:
         return jsonify({"error": f"Missing field: {e}"}), 400
     except ValueError as e:
         return jsonify({"error": f"Invalid value: {e}"}), 400
     except Exception as e:
         return jsonify({"error": str(e)}), 500
- 
- 
 if __name__ == "__main__":
-    print(f"=" * 50)
-    print(f"House Price Predictor — Flask Server")
-    print(f"Opening browser at: http://127.0.0.1:5000")
-    print(f"=" * 50)
-
     print("House Price Predictor Server Started")
     threading.Timer(1.0, lambda: webbrowser.open("http://127.0.0.1:5000")).start()
     app.run(debug=False)
